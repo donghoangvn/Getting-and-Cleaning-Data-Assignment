@@ -1,0 +1,43 @@
+setwd("C:/Users/donghoangvn/Documents/UCI HAR Dataset")
+b1<-read.table("./test/subject_test.txt", header = FALSE)
+b2<-read.table("./test/X_test.txt", header = FALSE)
+b3<-read.table("./test/y_test.txt", header = FALSE)
+colnames(b1)<-c("subjects")
+colnames(b3)<-c("labels")
+b1$id<-row.names(b1)
+b2$id<-row.names(b2)
+b3$id<-row.names(b3)
+b<-merge(b1,b3,by="id")
+test<-merge(b2,b, by="id")
+d1<-read.table("./train/subject_train.txt", header = FALSE)
+d2<-read.table("./train/X_train.txt", header = FALSE)
+d3<-read.table("./train/y_train.txt", header = FALSE)
+colnames(d1)<-c("subjects")
+colnames(d3)<-c("labels")
+d1$id<-row.names(d1)
+d2$id<-row.names(d2)
+d3$id<-row.names(d3)
+d<-merge(d1,d3,by="id")
+train<-merge(d2,d, by="id")
+datafile<-rbind(test,train)
+datafile<-datafile[,-1]
+a<-read.table("features.txt", header = FALSE)
+aaa<-a[c(grep("mean",a$V2),grep("std",a$V2)),]
+list<-aaa[,1]
+list2<-c(list,562,563)
+datafile2<-datafile[,list2]
+e<-read.table("activity_labels.txt", header = FALSE)
+colnames(e)<-c("labels","labelword")
+datafile2$labelword<-e$labelword[match(datafile2$labels,e$labels)]
+list3<-aaa[,2]
+list4<-as.character(list3)
+colnames(datafile2)<-c(list4,"subjects","labels","activities")
+datafile3<-datafile2[,-82]
+z<-sapply(split(datafile3[,-c(80,81)],datafile3[,c(80,81)]),colMeans)
+p<-as.data.frame(z)
+q<-t(p)
+tidydata<-data.frame(q)
+colnames(tidydata)<-c(list4)
+tidydata$subjects<-rep(1:30,6)
+tidydata$activities<-c(rep("WALKING",30),rep("WALKING_UPSTAIRS",30),rep("WALKING_DOWNSTAIRS",30),rep("SITTING",30),rep("STANDING",30),rep("LAYING",30))
+row.names(tidydata)<-seq(1,180,1)
