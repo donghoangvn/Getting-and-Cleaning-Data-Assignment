@@ -5,8 +5,8 @@
 ##tBodyAcc-XYZ
 ##tGravityAcc-XYZ
 ##tBodyAccJerk-XYZ
-##ttBodyGyro-XYZ
-##tttBodyGyroJerk-XYZ
+##tBodyGyro-XYZ
+##tBodyGyroJerk-XYZ
 ##tBodyAccMag
 ##tGravityAccMag
 ##tBodyAccJerkMag
@@ -15,7 +15,6 @@
 ##fBodyAcc-XYZ
 ##fBodyAccJerk-XYZ
 ##fBodyGyro-XYZ
-##fBodyAccMag
 ##fBodyAccMag
 ##fBodyAccJerkMag
 ##fBodyGyroMag
